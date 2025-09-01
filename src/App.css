@@ -1,0 +1,128 @@
+html, body { overflow-x: hidden; }
+.site-header {
+  background: #826d8c; /* your color */
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  height: 64px;
+}
+.brand-name { font-weight: 600; letter-spacing: 0.2px; }
+.nav { display: flex; gap: 16px; }
+.nav-link { opacity: 0.7; }
+.nav-link.active, .nav-link:hover { opacity: 1; text-decoration: underline; }
+
+.logo { height: 36px; width: auto; justify-self: end; }
+
+main.container { flex: 1; padding: 24px 16px 48px; }
+
+/* replace old grid with this */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5rem;
+  max-width: 900px;
+  margin: 0 auto; /* center the grid block */
+}
+@media (max-width: 700px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* project card becomes a button (reset default button look) */
+.project-card {
+  all: unset; /* remove default button styles */
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 8px;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+  cursor: pointer;
+}
+.project-card:hover { transform: translateY(-2px); background: #fafafa; }
+.project-card:focus-visible { outline: 2px solid black; outline-offset: 2px; }
+.project-card.open { border-color: #dcdcdc; }
+
+.project-title { font-size: 16px; margin: 0; }
+
+/* header row of the card with a chevron */
+.project-card-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+/* collapsible body (animated with max-height) */
+.project-body {
+  overflow: hidden;
+  transition: max-height 200ms ease;
+  will-change: max-height;
+  margin-top: 8px;
+  color: var(--muted);
+}
+.project-body p { margin: 0; }
+
+.project-card {
+  border: 1px solid var(--line);
+  padding: 16px;
+  border-radius: 8px;
+  transition: transform .08s ease, background .2s ease;
+}
+.project-card:hover { transform: translateY(-2px); background: #fafafa; }
+.project-title { font-size: 16px; margin: 0; }
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+.footer-inner {
+  min-height: 64px;
+  display: flex;
+  align-items: column;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.home-wrap {
+  position: relative;
+  min-height: 60vh;
+}
+.bg-svg {
+  position: fixed;           /* floats with the viewport */
+  top: 100%;
+  left: 90%;                 /* adjust to taste */
+  width: 50vmin;             /* ~half the screen, responsive */
+  height: auto;
+  opacity: 1;
+  pointer-events: none;      /* never intercept clicks */
+  z-index: 0;                /* base layer */
+  transition: transform 80ms linear;
+  will-change: transform;
+}
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+/* ensure foreground content sits above the bg */
+.content-elevate {
+  position: relative;
+  z-index: 1;
+}
+
+/* if reduced motion is preferred, lock the svg in place */
+@media (prefers-reduced-motion: reduce) {
+  .bg-svg {
+    transition: none;
+  }
+}

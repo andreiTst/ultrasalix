@@ -1,0 +1,33 @@
+:root {
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #666666;
+  --line: #eaeaea;
+  --accent: #111111;
+  --maxw: 1100px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+}
+
+.brand-name {
+  font-size: 28px;
+}
+h1, h2, h3, h4, h5, h6, .brand-name {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 16px; }
+.page-title { font-size: 28px; margin: 32px 0 16px; text-align: center; }
+.lead { font-size: 18px; color: var(--muted); }
