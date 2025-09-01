@@ -40,6 +40,8 @@ main.container { flex: 1; padding: 24px 16px 48px; }
   all: unset; /* remove default button styles */
   display: block;
   width: 100%;
+  box-sizing: border-box; /* keep padding inside width */
+  max-width: 100%;
   border: 1px solid var(--line);
   padding: 16px;
   border-radius: 8px;
@@ -51,6 +53,8 @@ main.container { flex: 1; padding: 24px 16px 48px; }
 .project-card.open { border-color: #dcdcdc; }
 
 .project-title { font-size: 16px; margin: 0; }
+/* prevent long titles from causing horizontal overflow */
+.project-title { overflow-wrap: anywhere; hyphens: auto; }
 
 /* header row of the card with a chevron */
 .project-card-head {
@@ -155,4 +159,9 @@ main.container { flex: 1; padding: 24px 16px 48px; }
     grid-column: 1 / -1;
   }
   .nav.open { display: flex; }
+}
+
+/* Mobile card spacing */
+@media (max-width: 640px) {
+  .project-card { padding: 20px; }
 }
