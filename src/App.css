@@ -13,6 +13,7 @@ html, body { overflow-x: hidden; }
   gap: 16px;
   height: 64px;
 }
+.menu-toggle { display: none; }
 .brand-name { font-weight: 600; letter-spacing: 0.2px; }
 .nav { display: flex; gap: 16px; }
 .nav-link { opacity: 0.7; }
@@ -26,12 +27,12 @@ main.container { flex: 1; padding: 24px 16px 48px; }
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 5rem;
+  gap: 3rem;
   max-width: 900px;
   margin: 0 auto; /* center the grid block */
 }
 @media (max-width: 700px) {
-  .grid-2 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; gap: 1.25rem; }
 }
 
 /* project card becomes a button (reset default button look) */
@@ -125,4 +126,33 @@ main.container { flex: 1; padding: 24px 16px 48px; }
   .bg-svg {
     transition: none;
   }
+}
+
+/* Mobile header adjustments */
+@media (max-width: 640px) {
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    height: auto;
+    padding: 10px 0;
+  }
+  .logo { display: none; }
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .nav {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 0 4px;
+    grid-column: 1 / -1;
+  }
+  .nav.open { display: flex; }
 }
