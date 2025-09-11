@@ -5,6 +5,10 @@ const projects = [
         description: 'burger' },
     { title: 'ZOOmArt- animale, obiectiv, expresie vizuală', 
         description: 'zoo burger' },
+            {
+        title: 'ZOOmArt2- animale, obiectiv, expresie vizuală',
+        description: 'zoo burgers'
+    }
 ]
 
 export default function Home() {
