@@ -1,6 +1,5 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useState } from 'react'
-import logo from '../assets/logo.svg'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -36,7 +35,7 @@ export default function Header() {
           </NavLink>
         </nav>
 
-        <img src={logo} alt="logo asociație" className="logo" />
+        <img src="/UltraLogoFinal.png" alt="logo asociație" className="logo" />
       </div>
     </header>
   )

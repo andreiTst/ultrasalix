@@ -3,12 +3,7 @@ export default function About() {
       <section>
         <h1 className="page-title">Cine suntem</h1>
         <p className="lead">
-          Suntem o asociație culturală din românia dedicată proiectelor care conectează tradiția cu prezentul,
-          prin colaborare cu artiști, comunități locale și parteneri educaționali.
-        </p>
-        <p>
-          Misiunea noastră este să susținem creația, documentarea și diseminarea proiectelor culturale cu impact social,
-          într-un mod transparent și sustenabil.
+          Asociația Culturală Ultra Salix este un spațiu dedicat colaborării și experimentului artistic. Creată din dorința de a sprijini artiștii și comunitățile, asociația dezvoltă proiecte culturale și educaționale care aduc împreună tradiția și inovația, arta și societatea. Cu rădăcini în Transilvania și deschidere internațională, Ultra Salix crede în puterea culturii de a construi punți între oameni, cultivând în același timp respectul pentru natură și un mod de a crea responsabil, inspirat de ideea de durabilitate.
         </p>
       </section>
     )

@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 
 const projects = [
-    { title: 'Din Arhiva in Realitatea Virtuală: Procesul moașei Barbala Farkas', 
-        description: 'burger' },
-    { title: 'ZOOmArt- animale, obiectiv, expresie vizuală', 
-        description: 'zoo burger' },
-            {
-        title: 'ZOOmArt2- animale, obiectiv, expresie vizuală',
-        description: 'zoo burgers'
+    {
+        title: 'ZOOm Art: animale, obiective și expresie vizuală',
+        description: 'Concurs de fotografie dedicat tinerilor între 12-19 ani și vizitatorilor Grădinii zoologice Târgu-Mureș. Fotografiile trebuie realizate în incinta Zoo Târgu-Mureș în perioada 20 septembrie – 20 octombrie 2025. Organizat în parteneriat cu Grădina zoologică Târgu-Mureș și Consiliul Județean Mureș. Mai multe informații: https://sites.google.com/ultrasalix.com/zoomart/home'
+    },
+    {
+        title: 'Și altele...',
+        description: 'Urmăriți-ne creșterea!'
     }
 ]
 

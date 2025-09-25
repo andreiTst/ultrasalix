@@ -17,21 +17,6 @@ body {
   line-height: 1.55;
 }
 
-/* Subtle site-wide background logo with 50% opacity */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0; /* cover viewport */
-  background-image: url('./assets/logo.svg');
-  background-repeat: no-repeat;
-  background-position: right 5% bottom 8%;
-  background-size: min(60vmin, 680px);
-  opacity: 0.5; /* 50% transparency */
-  pointer-events: none; /* never block interactions */
-  z-index: 0;
-  transform: rotate(5deg);
-  transform-origin: right bottom;
-}
 
 img, video { max-width: 100%; height: auto; }
 
