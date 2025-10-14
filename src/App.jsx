@@ -5,6 +5,7 @@ import Footer from './components/Footer.jsx'
 import Contact from './pages/Contact.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
+import TurVirtual from './pages/TurVirtual.jsx'
 import './App.css'
 
 function ZooMartRedirect() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/turvirtual" element={<TurVirtual />} />
           <Route path="/zoomart" element={<ZooMartRedirect />} />
         </Routes>
       </main>
