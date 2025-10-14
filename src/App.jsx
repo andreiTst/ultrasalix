@@ -6,6 +6,7 @@ import Contact from './pages/Contact.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import TurVirtual from './pages/TurVirtual.jsx'
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import './App.css'
 
 function ZooMartRedirect() {
@@ -29,6 +30,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <SpeedInsights />
     </div>
   )
 }
