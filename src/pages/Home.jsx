@@ -64,7 +64,7 @@ export default function Home() {
                     <span className="chevron" aria-hidden="true">{isOpen ? '–' : '+'}</span>
                 </div>
 
-                <div className="project-body" style={{ maxHeight: isOpen ? '600px' : '0px' }}>
+                <div className="project-body" style={{ maxHeight: isOpen ? '3000px' : '0px' }}>
                     <p style={{ whiteSpace: 'pre-line' }}>{p.description}</p>
                     {hasLink && (
                         <button
