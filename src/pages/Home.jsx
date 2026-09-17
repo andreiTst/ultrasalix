@@ -15,6 +15,14 @@ const projects = [
         linkType: 'internal'
     },
     {
+        title: 'EPIDEMIX Digital: Tur virtual al istoriilor despre epidemii, corp și vindecare',
+        description: 'Un tur virtual interactiv și trilingv (RO, HU, EN), realizat pe baza documentației, cercetării și materialelor expoziției „EPIDEMIX” a Muzeului Județean Mureș.\n\nProiectul explorează, pe trei secțiuni, practicile ritualice și de vindecare din Bazinul Carpatic, istoria epidemiilor și a bolilor, precum și urmele traumelor și afecțiunilor identificate pe oseminte umane. Limbajul vizual și atmosfera expoziției sunt păstrate și adaptate pentru desktop și mobil, iar experiența este completată de un sound design original. Conținutul muzeal și științific este verificat permanent împreună cu Muzeul Județean Mureș. Lansarea publică este programată pentru 11 decembrie 2026, în Sala Multimedia a Muzeului de Istorie și Arheologie din Cetatea Târgu Mureș.'
+    },
+    {
+        title: 'Cultura alimentară a Târgu-Mureșului: Atlas digital despre hrană, obiceiuri și viață cotidiană',
+        description: 'Propune realizarea unui produs cultural digital, interactiv și trilingv, care explorează istoria orașului din 1616 până la mijlocul secolului XX prin relația dintre hrană, schimburi, mediu și viața cotidiană.'
+    },
+    {
         title: 'Și altele...',
         description: 'Urmăriți-ne creșterea!'
     }
