@@ -20,12 +20,19 @@ export default function Header() {
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(v => !v)}
         >
-          ☰
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0 1H18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M0 7H18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <path d="M0 13H18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
         </button>
 
         <nav id="site-nav" className={`nav ${menuOpen ? 'open' : ''}`}>
           <NavLink to="/" end className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>
             Acasă
+          </NavLink>
+          <NavLink to="/proiecte" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>
+            Proiecte
           </NavLink>
           <NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>
             Despre noi
