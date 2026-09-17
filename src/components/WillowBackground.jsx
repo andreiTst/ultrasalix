@@ -471,7 +471,7 @@ export default function WillowBackground({ variant = 'hero' }) {
                 const d = Math.hypot(mx, my)
                 if (d < MOUSE_RADIUS) {
                     const f = 1 - d / MOUSE_RADIUS
-                    br.vel += (Math.sign(mx) * f * 0.0012 + mouse.vx * f * 0.00024) * br.sway
+                    br.vel += (Math.sign(mx) * f * 0.0012 + mouse.vx * f * 0.00035) * br.sway
                 }
             }
             br.vel += -br.offset * 0.04
