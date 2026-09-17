@@ -7,6 +7,7 @@ import Home from './pages/Home.jsx'
 import Proiecte from './pages/Proiecte.jsx'
 import About from './pages/About.jsx'
 import TurVirtual from './pages/TurVirtual.jsx'
+import Salix from './pages/Salix.jsx'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import './App.css'
 
@@ -19,12 +20,12 @@ function ZooMartRedirect() {
 
 export default function App() {
   const location = useLocation()
-  const isHome = location.pathname === '/'
+  const fitsViewport = location.pathname === '/' || location.pathname === '/salix'
 
   return (
-    <div className={`app${isHome ? ' app-home' : ''}`}>
+    <div className={`app${fitsViewport ? ' app-home' : ''}`}>
       <Header />
-      <main className={`container${isHome ? ' container-home' : ''}`}>
+      <main className={`container${fitsViewport ? ' container-home' : ''}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/proiecte" element={<Proiecte />} />
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/turvirtual" element={<TurVirtual />} />
           <Route path="/zoomart" element={<ZooMartRedirect />} />
+          <Route path="/salix" element={<Salix />} />
         </Routes>
       </main>
       <Footer />

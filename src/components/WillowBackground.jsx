@@ -21,6 +21,13 @@ const MOUSE_PUSH = 1.2
 const MOUSE_DRAG = 0.22
 const STEP_MS = 1000 / 60
 const BEND_STIFFNESS = Array.from({ length: SEGMENTS - 1 }, (_, i) => BEND_BASE + (BEND_TIP - BEND_BASE) * (i / (SEGMENTS - 2)))
+// Wind phase shifts ~0.1 rad per node; sin(A + i*k) expanded with lookup tables
+const WIND_COS = Array.from({ length: SEGMENTS + 1 }, (_, i) => Math.cos(i * 0.1))
+const WIND_SIN = Array.from({ length: SEGMENTS + 1 }, (_, i) => Math.sin(i * 0.1))
+const LEAF_COS = Math.cos(0.32)
+const LEAF_SIN = Math.sin(0.32)
+// Canvas only covers the tree side of the hero (fewer pixels to raster each frame)
+const CANVAS_LEFT = 0.3
 const POP_FRAMES = 28
 const IDLE_MS = 3000
 
@@ -48,8 +55,20 @@ function easeOutBack(t) {
     return 1 + c3 * (t - 1) ** 3 + c1 * (t - 1) ** 2
 }
 
-// Tree grows in the right half; text occupies the left column
-function computeLayout(w, h) {
+// 'hero': tree in the right half, text in the left column.
+// 'full': tree centered and sized to the whole viewport (portrait phones included).
+function computeLayout(w, h, variant) {
+    if (variant === 'full') {
+        const scale = Math.min(w * 1.2, h * 0.95)
+        return {
+            ox: w * 0.5,
+            groundY: h + 10,
+            forkY: h - Math.max(scale * 0.44, h * 0.45),
+            scale,
+            trunkTopW: scale * 0.05,
+            trunkBaseW: scale * 0.075
+        }
+    }
     const scale = Math.min(w * 0.42, h * 0.95)
     return {
         ox: w * 0.73,
@@ -99,20 +118,35 @@ function buildTree(layout) {
     })
 
     const strands = []
+    const leafLen = Math.max(5, Math.min(10, scale * 0.016))
     const addStrand = (branchIndex, t, lengthMul) => {
         const back = rand() < 0.35
         const palette = back ? LEAF_BACK : LEAF_FRONT
         const side = branches[branchIndex].angle >= 0 ? 1 : -1
+        // Draw order matters: keeps the seeded tree shape stable
+        const length = scale * (0.24 + rand() * 0.5) * lengthMul
+        const launch = (0.45 + rand() * 0.6) * side
+        const phase = rand() * Math.PI * 2
+        const leafSeed = Math.floor(rand() * 7)
+        const leafLens = []
+        const leafSides = []
+        for (let i = 0; i <= SEGMENTS; i++) {
+            leafLens.push(leafLen * (0.75 + ((i * 7 + leafSeed) % 4) * 0.12))
+            leafSides.push((i + leafSeed) % 2 === 0 ? 1 : -1)
+        }
         strands.push({
             branch: branchIndex,
             t,
-            length: scale * (0.24 + rand() * 0.5) * lengthMul,
-            launch: (0.45 + rand() * 0.6) * side,
-            phase: rand() * Math.PI * 2,
-            leafSeed: Math.floor(rand() * 7),
+            length,
+            launch,
+            phase,
+            leafLens,
+            leafSides,
             back,
             color: back ? STRAND_BACK : STRAND_FRONT,
             leafColor: palette[Math.floor(rand() * palette.length)],
+            widths: null,
+            anchor: null,
             nodes: null
         })
     }
@@ -129,45 +163,63 @@ function buildTree(layout) {
         }
     })
 
+    const groupByColor = (list) => {
+        const map = new Map()
+        for (const s of list) {
+            if (!map.has(s.leafColor)) map.set(s.leafColor, [])
+            map.get(s.leafColor).push(s)
+        }
+        return [...map.entries()]
+    }
+    const backStrands = strands.filter((s) => s.back)
+    const frontStrands = strands.filter((s) => !s.back)
+
     return {
         ...layout,
         branches,
         strands,
-        backStrands: strands.filter((s) => s.back),
-        frontStrands: strands.filter((s) => !s.back)
+        backStrands,
+        frontStrands,
+        backLeafGroups: groupByColor(backStrands),
+        frontLeafGroups: groupByColor(frontStrands)
     }
 }
 
+// Reused scratch buffers so ribbon drawing allocates nothing per frame
+const LX = new Float64Array(32)
+const LY = new Float64Array(32)
+const RX = new Float64Array(32)
+const RY = new Float64Array(32)
+
 function drawRibbon(ctx, pts, widths, color) {
     const n = pts.length
-    const left = []
-    const right = []
     for (let i = 0; i < n; i++) {
-        const a = pts[Math.max(0, i - 1)]
-        const b = pts[Math.min(n - 1, i + 1)]
+        const a = pts[i > 0 ? i - 1 : 0]
+        const b = pts[i < n - 1 ? i + 1 : n - 1]
         let tx = b.x - a.x
         let ty = b.y - a.y
         const len = Math.sqrt(tx * tx + ty * ty) || 1
-        tx /= len
-        ty /= len
-        const hw = widths[i] / 2
-        left.push({ x: pts[i].x - ty * hw, y: pts[i].y + tx * hw })
-        right.push({ x: pts[i].x + ty * hw, y: pts[i].y - tx * hw })
+        const hw = widths[i] / 2 / len
+        tx *= hw
+        ty *= hw
+        LX[i] = pts[i].x - ty
+        LY[i] = pts[i].y + tx
+        RX[i] = pts[i].x + ty
+        RY[i] = pts[i].y - tx
     }
 
     ctx.fillStyle = color
     ctx.beginPath()
-    ctx.moveTo(left[0].x, left[0].y)
+    ctx.moveTo(LX[0], LY[0])
     for (let i = 1; i < n - 1; i++) {
-        ctx.quadraticCurveTo(left[i].x, left[i].y, (left[i].x + left[i + 1].x) / 2, (left[i].y + left[i + 1].y) / 2)
+        ctx.quadraticCurveTo(LX[i], LY[i], (LX[i] + LX[i + 1]) / 2, (LY[i] + LY[i + 1]) / 2)
     }
-    ctx.lineTo(left[n - 1].x, left[n - 1].y)
-    ctx.lineTo(right[n - 1].x, right[n - 1].y)
+    ctx.lineTo(LX[n - 1], LY[n - 1])
+    ctx.lineTo(RX[n - 1], RY[n - 1])
     for (let i = n - 2; i > 0; i--) {
-        ctx.quadraticCurveTo(right[i].x, right[i].y, (right[i].x + right[i - 1].x) / 2, (right[i].y + right[i - 1].y) / 2)
+        ctx.quadraticCurveTo(RX[i], RY[i], (RX[i] + RX[i - 1]) / 2, (RY[i] + RY[i - 1]) / 2)
     }
-    ctx.lineTo(right[0].x, right[0].y)
-    ctx.closePath()
+    ctx.lineTo(RX[0], RY[0])
     ctx.fill()
 
     ctx.beginPath()
@@ -201,11 +253,12 @@ function samplePath(geo, t) {
     }
 }
 
-export default function WillowBackground() {
+export default function WillowBackground({ variant = 'hero' }) {
     const canvasRef = useRef(null)
     const containerRef = useRef(null)
 
     useEffect(() => {
+        const canvasLeft = variant === 'hero' ? CANVAS_LEFT : 0
         const canvas = canvasRef.current
         const container = containerRef.current
         if (!canvas || !container) return undefined
@@ -215,6 +268,9 @@ export default function WillowBackground() {
 
         let width = 0
         let height = 0
+        let offsetX = 0
+        let containerLeft = 0
+        let containerTop = 0
         let tree = null
         let falling = []
         let animationId = null
@@ -288,7 +344,7 @@ export default function WillowBackground() {
         }
 
         const computeGeometry = () => {
-            const trunk = trunkGeometry()
+            const trunk = tree.trunk
             const geos = []
             tree.branches.forEach((br, i) => {
                 geos[i] = branchGeometry(br, br.parent === -1 ? trunk : geos[br.parent])
@@ -336,13 +392,16 @@ export default function WillowBackground() {
             nodes[1].x = anchor.x + anchor.dx * seg
             nodes[1].y = anchor.y + anchor.dy * seg
 
+            const windPhase = time * 0.8 + s.phase
+            const windSin = Math.sin(windPhase) * 0.02
+            const windCos = Math.cos(windPhase) * 0.02
+            const gust = Math.sin(time * 2.1 + anchor.x * 0.012) * 0.008
+
             for (let i = 2; i <= SEGMENTS; i++) {
                 const n = nodes[i]
-                const along = i / SEGMENTS
                 const vx = (n.x - n.px) * DAMPING
                 const vy = (n.y - n.py) * DAMPING
-                let ax = (Math.sin(time * 0.8 + s.phase + n.y * 0.006) * 0.02 +
-                    Math.sin(time * 2.1 + n.x * 0.012) * 0.008) * along
+                let ax = (windSin * WIND_COS[i] + windCos * WIND_SIN[i] + gust) * (i / SEGMENTS)
                 let ay = GRAVITY
 
                 if (mouse.active) {
@@ -450,7 +509,7 @@ export default function WillowBackground() {
             p.x += p.vx
             p.y += p.vy
             p.rot += p.vx * 0.05
-            if (p.y - p.size > height || p.x < -40 || p.x > width + 40) {
+            if (p.y - p.size > height || p.x < offsetX - 40 || p.x > width + 40) {
                 spawnFallingLeaf(p)
             }
         }
@@ -470,14 +529,8 @@ export default function WillowBackground() {
         }
 
         // All leaves of one color go into a single path -> one fill call per color
-        const drawLeafLayer = (strands) => {
-            const leafLen = Math.max(5, Math.min(10, tree.scale * 0.016))
-            const byColor = new Map()
-            for (const s of strands) {
-                if (!byColor.has(s.leafColor)) byColor.set(s.leafColor, [])
-                byColor.get(s.leafColor).push(s)
-            }
-            for (const [color, list] of byColor) {
+        const drawLeafLayer = (groups) => {
+            for (const [color, list] of groups) {
                 ctx.fillStyle = color
                 ctx.beginPath()
                 for (const s of list) {
@@ -485,14 +538,17 @@ export default function WillowBackground() {
                     for (let i = 3; i <= SEGMENTS; i++) {
                         const a = nodes[i - 1]
                         const b = nodes[i]
-                        const ang = Math.atan2(b.y - a.y, b.x - a.x)
-                        // One narrow leaf per segment, alternating sides, hanging along the strand
-                        const side = (i + s.leafSeed) % 2 === 0 ? 1 : -1
-                        const len = leafLen * (0.75 + ((i * 7 + s.leafSeed) % 4) * 0.12)
-                        const rot = ang + side * 0.32
+                        let dx = b.x - a.x
+                        let dy = b.y - a.y
+                        const inv = 1 / (Math.sqrt(dx * dx + dy * dy) || 1)
+                        dx *= inv
+                        dy *= inv
+                        // One narrow leaf per segment, alternating sides, rotated ±0.32 rad off the strand
+                        const side = s.leafSides[i]
+                        const len = s.leafLens[i]
+                        const ux = dx * LEAF_COS - dy * LEAF_SIN * side
+                        const uy = dx * LEAF_SIN * side + dy * LEAF_COS
                         // Thin diamond: visually identical to an ellipse at this size, much cheaper
-                        const ux = Math.cos(rot)
-                        const uy = Math.sin(rot)
                         const cx = a.x + ux * len * 0.95
                         const cy = a.y + uy * len * 0.95
                         const hx = -uy * 1.9
@@ -507,25 +563,21 @@ export default function WillowBackground() {
             }
         }
 
-        const drawStrandLayer = (strands) => {
-            strands.forEach((s) => {
-                const baseW = Math.max(1.2, Math.min(6, s.anchor.w * 0.55))
-                const widths = s.nodes.map((_, i) => baseW + (0.7 - baseW) * (i / SEGMENTS) ** 0.6)
-                drawRibbon(ctx, s.nodes, widths, s.color)
-            })
-            drawLeafLayer(strands)
+        const drawStrandLayer = (strands, leafGroups) => {
+            for (const s of strands) drawRibbon(ctx, s.nodes, s.widths, s.color)
+            drawLeafLayer(leafGroups)
         }
 
         const draw = () => {
-            ctx.clearRect(0, 0, width, height)
+            ctx.clearRect(offsetX, 0, width - offsetX, height)
             const { trunk, geos } = currentGeometry
 
-            drawStrandLayer(tree.backStrands)
+            drawStrandLayer(tree.backStrands, tree.backLeafGroups)
 
             drawRibbon(ctx, trunk.pts, trunk.widths, WOOD)
-            geos.forEach((geo) => drawRibbon(ctx, geo.pts, geo.widths, WOOD))
+            for (const geo of geos) drawRibbon(ctx, geo.pts, geo.widths, WOOD)
 
-            drawStrandLayer(tree.frontStrands)
+            drawStrandLayer(tree.frontStrands, tree.frontLeafGroups)
 
             for (const p of falling) {
                 const grow = easeOutBack(Math.min(1, p.age / POP_FRAMES))
@@ -543,15 +595,21 @@ export default function WillowBackground() {
 
         const resize = () => {
             const rect = container.getBoundingClientRect()
+            containerLeft = rect.left
+            containerTop = rect.top
             if (rect.width === width && rect.height === height) return
             width = rect.width
             height = rect.height
+            offsetX = Math.round(width * canvasLeft)
             const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
-            canvas.width = width * dpr
+            canvas.style.left = `${offsetX}px`
+            canvas.style.width = `${width - offsetX}px`
+            canvas.width = (width - offsetX) * dpr
             canvas.height = height * dpr
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+            ctx.setTransform(dpr, 0, 0, dpr, -offsetX * dpr, 0)
 
-            tree = buildTree(computeLayout(width, height))
+            tree = buildTree(computeLayout(width, height, variant))
+            tree.trunk = trunkGeometry()
             falling = []
             const { geos } = computeGeometry()
             for (const s of tree.strands) initStrand(s, strandAnchor(s, geos))
@@ -560,6 +618,11 @@ export default function WillowBackground() {
             mouse.active = false
             for (let i = 0; i < 180; i++) simulate()
             mouse.active = wasActive
+
+            for (const s of tree.strands) {
+                const baseW = Math.max(1.2, Math.min(6, s.anchor.w * 0.55))
+                s.widths = s.nodes.map((_, i) => baseW + (0.7 - baseW) * (i / SEGMENTS) ** 0.6)
+            }
 
             falling = Array.from({ length: 9 }, (_, i) => {
                 const p = {
@@ -581,9 +644,8 @@ export default function WillowBackground() {
         }
 
         const setMouse = (clientX, clientY) => {
-            const rect = canvas.getBoundingClientRect()
-            mouse.x = clientX - rect.left
-            mouse.y = clientY - rect.top
+            mouse.x = clientX - containerLeft
+            mouse.y = clientY - containerTop
             if (!mouse.active) {
                 mouse.lastX = mouse.x
                 mouse.lastY = mouse.y
@@ -635,7 +697,10 @@ export default function WillowBackground() {
         const resizeObserver = new ResizeObserver(resize)
         resizeObserver.observe(container)
         window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('touchstart', handleTouchMove, { passive: true })
         window.addEventListener('touchmove', handleTouchMove, { passive: true })
+        window.addEventListener('touchend', handleMouseLeave)
+        window.addEventListener('touchcancel', handleMouseLeave)
         document.addEventListener('mouseleave', handleMouseLeave)
 
         if (!reduceMotion) {
@@ -646,10 +711,13 @@ export default function WillowBackground() {
             if (animationId) cancelAnimationFrame(animationId)
             resizeObserver.disconnect()
             window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('touchstart', handleTouchMove)
             window.removeEventListener('touchmove', handleTouchMove)
+            window.removeEventListener('touchend', handleMouseLeave)
+            window.removeEventListener('touchcancel', handleMouseLeave)
             document.removeEventListener('mouseleave', handleMouseLeave)
         }
-    }, [])
+    }, [variant])
 
     return (
         <div className="willow-bg" ref={containerRef} aria-hidden="true">
