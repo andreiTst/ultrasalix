@@ -17,8 +17,8 @@ const ITERATIONS = 5
 const BEND_BASE = 0.45
 const BEND_TIP = 0.04
 const MOUSE_RADIUS = 150
-const MOUSE_PUSH = 1.2
-const MOUSE_DRAG = 0.22
+const MOUSE_PUSH = 0.7
+const MOUSE_DRAG = 0.13
 const STEP_MS = 1000 / 60
 const BEND_STIFFNESS = Array.from({ length: SEGMENTS - 1 }, (_, i) => BEND_BASE + (BEND_TIP - BEND_BASE) * (i / (SEGMENTS - 2)))
 // Wind phase shifts ~0.1 rad per node; sin(A + i*k) expanded with lookup tables
@@ -471,7 +471,7 @@ export default function WillowBackground({ variant = 'hero' }) {
                 const d = Math.hypot(mx, my)
                 if (d < MOUSE_RADIUS) {
                     const f = 1 - d / MOUSE_RADIUS
-                    br.vel += (Math.sign(mx) * f * 0.002 + mouse.vx * f * 0.0004) * br.sway
+                    br.vel += (Math.sign(mx) * f * 0.0012 + mouse.vx * f * 0.00024) * br.sway
                 }
             }
             br.vel += -br.offset * 0.04
