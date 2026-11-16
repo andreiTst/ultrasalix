@@ -21,7 +21,7 @@ export default function Home() {
             {isWide && <WillowBackground />}
 
             <div className="hero-content">
-                <p className="hero-quote-latin">„Salix flectitur, non frangitur.”</p>
+                <p className="hero-quote-latin">Dincolo de Patrimoniu în Pezent</p>
                 <p className="hero-quote-translation">Sălcia se-ndoaie, dar nu se frânge.</p>
 
                 <div className="hero-divider" aria-hidden="true" />

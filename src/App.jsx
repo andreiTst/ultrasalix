@@ -20,7 +20,7 @@ function ZooMartRedirect() {
 
 export default function App() {
   const location = useLocation()
-  const fitsViewport = location.pathname === '/' || location.pathname === '/salix'
+  const fitsViewport = location.pathname === '/' || location.pathname === '/intro'
 
   return (
     <div className={`app${fitsViewport ? ' app-home' : ''}`}>
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/turvirtual" element={<TurVirtual />} />
           <Route path="/zoomart" element={<ZooMartRedirect />} />
-          <Route path="/salix" element={<Salix />} />
+          <Route path="/intro" element={<Salix />} />
         </Routes>
       </main>
       <Footer />
