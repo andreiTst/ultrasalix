@@ -43,7 +43,7 @@ export default function Header() {
         </nav>
 
         <Link to="/intro" className="logo-link" onClick={closeMenu} aria-label="Intro">
-          <img src="/ultra-salix-icon.svg" alt="Logo Ultra Salix" className="logo" width="40" height="40" />
+          <img src="/ultra-salix-icon.svg" alt="Logo Ultra Salix" className="logo" width="32" height="32" />
         </Link>
       </div>
     </header>

@@ -52,7 +52,7 @@ html, body { overflow-x: hidden; }
 }
 .logo-link:hover { transform: rotate(-8deg) scale(1.06); }
 .logo {
-  height: 40px;
+  height: 32px;
   width: auto;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
 }
@@ -145,7 +145,7 @@ main.container.container-home {
 
 .hero-quote-latin {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(28px, 3.6vw, 52px);
+  font-size: clamp(24px, 3vw, 44px);
   font-weight: 600;
   color: var(--purple-800);
   margin: 0;
@@ -603,7 +603,7 @@ main.container.container-home {
   }
   .brand { grid-column: 1; grid-row: 1; }
   .logo-link { grid-column: 2; grid-row: 1; }
-  .logo { height: 32px; }
+  .logo { height: 26px; }
   .menu-toggle {
     grid-column: 3;
     grid-row: 1;
