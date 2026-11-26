@@ -13,7 +13,7 @@ function useMediaQuery(query) {
     )
 }
 
-export default function Home() {
+export default function Home({ content }) {
     const isWide = useMediaQuery(WIDE_QUERY)
 
     return (
@@ -21,21 +21,20 @@ export default function Home() {
             {isWide && <WillowBackground />}
 
             <div className="hero-content">
-                <p className="hero-quote-latin">Dincolo de Patrimoniu în Prezent</p>
+                <h1 className="hero-quote-latin">{content.headline}</h1>
 
                 <div className="hero-divider" aria-hidden="true" />
 
                 <p className="hero-lead">
-                    Asociația Culturală Ultra Salix cultivă proiecte care leagă tradiția de inovație,
-                    comunitatea de artă.
+                    {content.home.lead}
                 </p>
 
                 <div className="hero-actions">
-                    <Link to="/proiecte" className="hero-btn hero-btn--primary">
-                        Vezi proiectele noastre
+                    <Link to={content.paths.projects} className="hero-btn hero-btn--primary">
+                        {content.home.projects}
                     </Link>
-                    <Link to="/about" className="hero-btn hero-btn--ghost">
-                        Despre noi
+                    <Link to={content.paths.about} className="hero-btn hero-btn--ghost">
+                        {content.navigation.about}
                     </Link>
                 </div>
             </div>

@@ -1,0 +1,224 @@
+{
+  "ro": {
+    "paths": {
+      "home": "/",
+      "projects": "/proiecte",
+      "about": "/about",
+      "contact": "/contact",
+      "intro": "/intro"
+    },
+    "brand": "Asociația Culturală Ultra Salix",
+    "navigation": {
+      "home": "Acasă",
+      "projects": "Proiecte",
+      "about": "Despre noi",
+      "contact": "Contact"
+    },
+    "menuLabel": "Comută meniul",
+    "languageLabel": "Limba site-ului",
+    "introLabel": "Pagina de prezentare Ultra Salix",
+    "headline": "Dincolo de patrimoniu în prezent",
+    "home": {
+      "lead": "Dezvoltăm proiecte culturale care aduc patrimoniul, memoria colectivă și arta mai aproape de public, prin experiențe accesibile și adaptate prezentului.",
+      "projects": "Vezi proiectele noastre"
+    },
+    "about": {
+      "title": "Cine suntem",
+      "intro": "Asociația Culturală Ultra Salix dezvoltă proiecte la intersecția dintre patrimoniu, memorie colectivă, arte vizuale și artă digitală.",
+      "paragraphs": [
+        "Înființată în 2024, la Târgu-Mureș, Ultra Salix este o organizație culturală nonprofit independentă. Scopul nostru este să apropiem cultura de oameni printr-o comunicare clară și experiențe creative, accesibile și relevante pentru prezent.",
+        "Îmbinăm documentarea cu libertatea creativă și tehnologiile digitale pentru a crea noi legături între instituțiile culturale și public. Colaborăm cu muzee, artiști și comunități pentru a crea, interpreta și prezenta conținut cultural.",
+        "Asociația a fost înființată și este condusă de Mihaela Miklošić, producător creativ cu experiență în producția cinematografică și în dezvoltarea și coordonarea proiectelor culturale."
+      ],
+      "values": [
+        [
+          "Documentare și creație",
+          "Proiecte culturale bazate pe surse documentare și abordări creative contemporane."
+        ],
+        [
+          "Colaborare",
+          "Lucrăm cu instituții culturale, artiști și comunități."
+        ],
+        [
+          "Cultură accesibilă",
+          "Conținut cultural prezentat clar, în formate relevante și adaptate publicului de astăzi."
+        ]
+      ],
+      "cta": "Vrei să colaborăm sau să afli mai multe?",
+      "button": "Contactează-ne"
+    },
+    "contact": {
+      "lead": "Pentru propuneri de colaborare, parteneriate culturale și sponsorizări, ne puteți scrie la:",
+      "role": "Președinta Asociației Culturale Ultra Salix",
+      "press": "Pentru presă și comunicare:",
+      "location": "Târgu-Mureș, România"
+    },
+    "intro": {
+      "subtitle": "Cultură, istorie și artă digitală",
+      "projects": "Proiectele noastre"
+    },
+    "sections": {
+      "completed": "Proiecte finalizate",
+      "development": "Proiecte în dezvoltare",
+      "collaboration": "Colaborări"
+    },
+    "projects": {
+      "zoomart": {
+        "title": "ZOOmArt: animale, obiectiv și expresie vizuală",
+        "badge": "FINALIZAT · 2025",
+        "paragraphs": [
+          "Un proiect de fotografie dedicat tinerilor de 12–19 ani și vizitatorilor Grădinii Zoologice Târgu-Mureș. În 2025, au fost înscrise peste 40 de fotografii, dintre care 12 au fost selectate și prezentate într-o expoziție publică.",
+          "Proiect cofinanțat de Consiliul Județean Mureș și realizat în parteneriat cu Grădina Zoologică Târgu-Mureș."
+        ],
+        "actions": [
+          "Vezi proiectul"
+        ]
+      },
+      "borbala": {
+        "title": "Din Arhivă în Realitate Virtuală: Procesul moașei Borbála Farkas",
+        "badge": "FINALIZAT · 2025",
+        "paragraphs": [
+          "Un tur virtual interactiv despre un proces din istoria Târgu-Mureșului din secolul al XVIII-lea, realizat pe baza documentelor de arhivă. Include ilustrații originale și este disponibil gratuit în română, maghiară și engleză.",
+          "Proiect realizat de Asociația Culturală Ultra Salix în parteneriat cu Muzeul Județean Mureș – Secția Istorie și cofinanțat de Municipiul Târgu-Mureș."
+        ],
+        "actions": [
+          "Explorează turul virtual",
+          "Disponibil și prin Muzeul Județean Mureș"
+        ]
+      },
+      "foodAtlas": {
+        "title": "Cultura alimentară a Târgu-Mureșului: Atlas digital despre hrană, obiceiuri și viață cotidiană",
+        "badge": "ÎN DEZVOLTARE · 2026",
+        "paragraphs": [
+          "Un atlas digital interactiv care explorează istoria Târgu-Mureșului, din 1616 până la mijlocul secolului XX, prin alimentație, piețe, meserii, obiceiuri și viața cotidiană. Va fi disponibil gratuit în română, maghiară și engleză.",
+          "Proiect cofinanțat de Municipiul Târgu-Mureș, realizat în parteneriat cu Muzeul Județean Mureș și cu sprijinul Muzeului Petry."
+        ]
+      },
+      "epidemix": {
+        "title": "EPIDEMIX Digital – Tur virtual al istoriilor despre epidemii, corp și vindecare",
+        "badge": "COLABORARE · PROMOVARE",
+        "paragraphs": [
+          "Ultra Salix sprijină promovarea proiectului cultural digital EPIDEMIX Digital, realizat de IO Transformative Solutions SRL în parteneriat cu Muzeul Județean Mureș. Prin canalele sale de comunicare, asociația contribuie la prezentarea patrimoniului local către un public mai larg."
+        ]
+      },
+      "integrationAtlas": {
+        "title": "The Integration Atlas – A Multi-Stakeholder Framework for Social Cohesion in Mureș County",
+        "badge": "COLABORARE",
+        "paragraphs": [
+          "Ultra Salix colaborează cu Asociația Suryam (MureșHub) la dezvoltarea conceptului narativ, a scenariilor și la producția executivă a patru experiențe VR despre migrație și coeziune socială."
+        ]
+      }
+    }
+  },
+  "en": {
+    "paths": {
+      "home": "/en/",
+      "projects": "/en/projects",
+      "about": "/en/about",
+      "contact": "/en/contact",
+      "intro": "/en/intro"
+    },
+    "brand": "Ultra Salix Cultural Association",
+    "navigation": {
+      "home": "Home",
+      "projects": "Projects",
+      "about": "About us",
+      "contact": "Contact"
+    },
+    "menuLabel": "Toggle menu",
+    "languageLabel": "Site language",
+    "introLabel": "Ultra Salix intro",
+    "headline": "Beyond Heritage into the Present",
+    "home": {
+      "lead": "We develop cultural projects that bring heritage, collective memory, and art closer to people through accessible experiences relevant to the present.",
+      "projects": "View our projects"
+    },
+    "about": {
+      "title": "Who we are",
+      "intro": "Ultra Salix Cultural Association develops projects at the intersection of cultural heritage, collective memory, visual arts, and digital art.",
+      "paragraphs": [
+        "Founded in 2024 in Târgu Mureș, Ultra Salix is an independent cultural nonprofit. Our goal is to bring culture closer to people through clear communication and creative experiences that are accessible and relevant today.",
+        "We combine research with creative freedom and digital technologies to build new connections between cultural institutions and the public. We work with museums, artists, and communities to create, interpret, and share cultural content.",
+        "Ultra Salix was founded and is led by Mihaela Miklošić, a creative producer with a background in film production and experience in developing and managing cultural projects."
+      ],
+      "values": [
+        [
+          "Research and creation",
+          "Cultural projects built on documented sources and contemporary creative approaches."
+        ],
+        [
+          "Collaboration",
+          "We work with cultural institutions, artists, and communities."
+        ],
+        [
+          "Accessible culture",
+          "Cultural content presented clearly, in formats relevant to today’s audiences."
+        ]
+      ],
+      "cta": "Interested in working with us or finding out more?",
+      "button": "Contact us"
+    },
+    "contact": {
+      "lead": "For collaboration proposals, cultural partnerships, and sponsorship inquiries, you can contact us at:",
+      "role": "Founder & President, Ultra Salix Cultural Association",
+      "press": "For press and media inquiries:",
+      "location": "Târgu Mureș, Romania"
+    },
+    "intro": {
+      "subtitle": "Culture, history & digital art",
+      "projects": "Our projects"
+    },
+    "sections": {
+      "completed": "Completed projects",
+      "development": "Projects in development",
+      "collaboration": "Collaborations"
+    },
+    "projects": {
+      "zoomart": {
+        "title": "ZOOmArt: Animals, Photography and Visual Expression",
+        "badge": "COMPLETED · 2025",
+        "paragraphs": [
+          "A photography project for young people aged 12–19 and visitors to the Târgu Mureș Zoo. In 2025, more than 40 photographs were submitted, and 12 were selected for a public exhibition.",
+          "Co-funded by the Mureș County Council and developed in partnership with the Târgu Mureș Zoo."
+        ],
+        "actions": [
+          "View project"
+        ]
+      },
+      "borbala": {
+        "title": "From Archive to Virtual Reality: The Trial of Midwife Borbála Farkas",
+        "badge": "COMPLETED · 2025",
+        "paragraphs": [
+          "An interactive virtual tour exploring an eighteenth-century trial from the history of Târgu Mureș, based on archival documents. It includes original illustrations and is freely available in Romanian, Hungarian, and English.",
+          "Developed by Ultra Salix Cultural Association in partnership with the History Department of the Mureș County Museum and co-funded by the Municipality of Târgu Mureș."
+        ],
+        "actions": [
+          "Explore the virtual tour",
+          "Also available through the Mureș County Museum"
+        ]
+      },
+      "foodAtlas": {
+        "title": "The Food Culture of Târgu Mureș: A Digital Atlas of Food, Customs, and Everyday Life",
+        "badge": "IN DEVELOPMENT · 2026",
+        "paragraphs": [
+          "An interactive digital atlas exploring the history of Târgu Mureș from 1616 to the mid-twentieth century through food, markets, trades, customs, and everyday life. It will be freely available in Romanian, Hungarian, and English.",
+          "Co-funded by the Municipality of Târgu Mureș, developed in partnership with the Mureș County Museum, with support from the Petry Museum."
+        ]
+      },
+      "epidemix": {
+        "title": "EPIDEMIX Digital – A Virtual Tour of Stories About Epidemics, the Body, and Healing",
+        "badge": "COLLABORATION · PROMOTION",
+        "paragraphs": [
+          "Ultra Salix supports the promotion of EPIDEMIX Digital, a digital cultural project developed by IO Transformative Solutions SRL in partnership with the Mureș County Museum. Through its communication channels, the association helps bring local cultural heritage to a wider audience."
+        ]
+      },
+      "integrationAtlas": {
+        "title": "The Integration Atlas – A Multi-Stakeholder Framework for Social Cohesion in Mureș County",
+        "badge": "COLLABORATION",
+        "paragraphs": [
+          "Ultra Salix collaborates with Asociația Suryam (MureșHub), contributing to the narrative concept, scripts, and executive production of four VR experiences exploring migration and social cohesion."
+        ]
+      }
+    }
+  }
+}
