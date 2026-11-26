@@ -545,10 +545,6 @@ main.container.container-home {
   margin-inline: auto;
   text-align: center;
 }
-.contact-intro {
-  margin: 0 auto var(--space-6);
-  line-height: 1.65;
-}
 .contact-details {
   display: grid;
   gap: var(--space-5);
@@ -560,7 +556,6 @@ main.container.container-home {
 }
 .contact-group p { margin: 0; }
 .contact-name { font-size: 1.2rem; font-weight: 600; }
-.contact-role,
 .contact-location { color: var(--muted); }
 .contact-group a { text-decoration: underline; }
 .contact-location { margin: var(--space-6) 0 0; }
